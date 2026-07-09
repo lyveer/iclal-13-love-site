@@ -31,17 +31,23 @@ const openLetterBtn = document.getElementById("openLetterBtn");
 const closeLetterBtn = document.getElementById("closeLetterBtn");
 const typewriterTextContainer = document.getElementById("typewriterText");
 
-const letterMessage = `Sevgilim İclal,
-
-Bugün, hayatımın en güzel kararını verdiğim, seninle bir araya geldiğimiz o özel günden beri geçen her anı kutluyoruz. 13 Mart 2025...
-
-O gün, zamanın bizim için yeniden akmaya başladığı, hayatımın en parlak yıldızının gökyüzünde belirdiği gündü. Sen benim hayatıma girdiğinden beri her şey daha anlamlı, her an daha değerli. Senin gülüşün, bakışın ve varlığın benim bu dünyadaki en büyük sığınağım.
-
-Sana olan sevgim, kelimelere sığmayacak kadar büyük ama bu küçük sayfada, seninle geçen her saniyenin benim için ne kadar kutsal olduğunu bilmeni istedim. Sen benim en güzel hikayem, en değerli şarkımsın.
-
-Birlikte yürüyeceğimiz bu yolda, her adımda elini tutmak ve seninle yaşlanmak dileğiyle...
-
-Sonsuza dek seninle,`;
+const letterMessage = `Yıl geçmiş ilk günümüzden
+Ömür gibi hissettim 
+Senin değil yıllar
+Ömürler geçiririm
+Gözlerindeki asalet yüceltir beni
+Sesindeki zarafet hafifletir içimi
+Büyüttün içimdeki çocuğu 
+Sanki kendi çocuğun gibi
+Öldürdün içimdeki kusuru
+Günler daha uzun seninle
+Sakin geliyor öfken bile
+Anlamsızlıklara anlam katıyor
+Konuşmalar aklımdan çıkmıyor
+Dudağının üstündeki ben ile
+İzin verme yapamayayım sensiz
+Seninle değil ömür
+Ömürler bile yetersiz`;
 
 let typewriterInterval;
 let charIndex = 0;
