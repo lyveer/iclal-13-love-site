@@ -1,39 +1,76 @@
+// ============================================
+// 13-love | Lyveris & Lyver — Main Script
+// ============================================
+
 // Target Anniversary Date: 13.03.2025
 const anniversaryDate = new Date("2025-03-13T00:00:00");
 
+// ============================================
+// Entrance Overlay & Background Music
+// ============================================
+const entranceOverlay = document.getElementById("entranceOverlay");
+const enterSiteBtn = document.getElementById("enterSiteBtn");
+const bgMusicContainer = document.getElementById("bgMusicContainer");
+
+if (enterSiteBtn) {
+    enterSiteBtn.addEventListener("click", () => {
+        // Fade out entrance
+        entranceOverlay.classList.add("fade-out");
+
+        // Inject the Spotify embed iframe with autoplay after user interaction
+        // This satisfies browser autoplay policies
+        if (bgMusicContainer) {
+            bgMusicContainer.innerHTML = `
+                <iframe 
+                    src="https://open.spotify.com/embed/track/5GpfyJrKHJI36jDKtQiyGN?utm_source=generator&theme=0&autoplay=1" 
+                    width="300" height="80" frameBorder="0" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="eager">
+                </iframe>
+            `;
+        }
+
+        // Remove entrance overlay from DOM after animation finishes
+        setTimeout(() => {
+            entranceOverlay.style.display = 'none';
+        }, 900);
+    });
+}
+
+// ============================================
 // Timer Update Function
+// ============================================
 function updateTimer() {
     const now = new Date();
     const diff = now - anniversaryDate;
     
-    // Convert to days, hours, minutes, seconds
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
     
-    // Display values
     document.getElementById("days").innerText = String(days).padStart(2, '0');
     document.getElementById("hours").innerText = String(hours).padStart(2, '0');
     document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
     document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
 }
 
-// Initial Timer Trigger and Setup Interval
 if (document.getElementById("days")) {
     updateTimer();
     setInterval(updateTimer, 1000);
 }
 
-// Love Letter Interactive Setup
+// ============================================
+// Love Letter — Typewriter Effect
+// ============================================
 const letterOverlay = document.getElementById("letterOverlay");
 const openLetterBtn = document.getElementById("openLetterBtn");
 const closeLetterBtn = document.getElementById("closeLetterBtn");
 const typewriterTextContainer = document.getElementById("typewriterText");
 
 const letterMessage = `Yıl geçmiş ilk günümüzden
-Ömür gibi hissettim 
-Senin değil yıllar
+Seninle ömür gibi hissettim 
+Seninle değil yıllar
 Ömürler geçiririm
 Gözlerindeki asalet yüceltir beni
 Sesindeki zarafet hafifletir içimi
@@ -67,7 +104,6 @@ function startTypewriter() {
             }
             charIndex++;
             
-            // Auto scroll container down if text overflows
             const parchment = document.querySelector(".parchment-letter");
             if (parchment) {
                 parchment.scrollTop = parchment.scrollHeight;
@@ -75,7 +111,7 @@ function startTypewriter() {
         } else {
             clearInterval(typewriterInterval);
         }
-    }, 45); // Adjust typing speed here (ms per character)
+    }, 50);
 }
 
 if (openLetterBtn) {
@@ -93,7 +129,6 @@ if (closeLetterBtn) {
 }
 
 if (letterOverlay) {
-    // Close overlay on clicking outside the parchment paper
     letterOverlay.addEventListener("click", (e) => {
         if (e.target === letterOverlay) {
             letterOverlay.classList.add("hidden");
@@ -102,13 +137,14 @@ if (letterOverlay) {
     });
 }
 
-
-// Particle Canvas Animation (Hearts and Stars)
+// ============================================
+// Particle Canvas Animation (Hearts & Stars)
+// ============================================
 const canvas = document.getElementById("particleCanvas");
 const ctx = canvas.getContext("2d");
 
 let particles = [];
-const maxParticles = 60;
+const maxParticles = 55;
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -125,16 +161,15 @@ class Particle {
     
     reset() {
         this.x = Math.random() * canvas.width;
-        // Start below the screen or randomly scattered at initialization
         this.y = canvas.height + Math.random() * 50;
-        this.size = Math.random() * 6 + 3;
-        this.speedY = -(Math.random() * 1.2 + 0.4);
-        this.speedX = Math.sin(Math.random() * 2 * Math.PI) * 0.3;
-        this.opacity = Math.random() * 0.5 + 0.3;
-        this.type = Math.random() > 0.75 ? "heart" : "star"; // More stars than hearts for elegance
+        this.size = Math.random() * 5 + 2.5;
+        this.speedY = -(Math.random() * 1 + 0.3);
+        this.speedX = Math.sin(Math.random() * 2 * Math.PI) * 0.25;
+        this.opacity = Math.random() * 0.45 + 0.2;
+        this.type = Math.random() > 0.8 ? "heart" : "star";
         this.rotation = Math.random() * 360;
-        this.rotationSpeed = (Math.random() - 0.5) * 0.5;
-        this.pulse = Math.random() * 0.05 + 0.01;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.4;
+        this.pulse = Math.random() * 0.04 + 0.008;
         this.pulseDir = 1;
     }
     
@@ -142,19 +177,15 @@ class Particle {
         this.y += this.speedY;
         this.x += this.speedX;
         
-        // Sparkle/twinkle effect
         this.opacity += this.pulse * this.pulseDir;
-        if (this.opacity > 0.8 || this.opacity < 0.2) {
+        if (this.opacity > 0.7 || this.opacity < 0.15) {
             this.pulseDir *= -1;
         }
         
-        // Rotation for hearts
         this.rotation += this.rotationSpeed;
         
-        // Reset particle if it goes off screen
         if (this.y < -30 || this.x < -30 || this.x > canvas.width + 30) {
             this.reset();
-            // Scatter newly created particles at the bottom
             this.y = canvas.height + 10;
         }
     }
@@ -162,8 +193,8 @@ class Particle {
     draw() {
         ctx.save();
         ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = this.type === "heart" ? "#dfba6b" : "#f5d796"; // Antique gold & pale gold
-        ctx.shadowBlur = 8;
+        ctx.fillStyle = this.type === "heart" ? "#dfba6b" : "#f5d796";
+        ctx.shadowBlur = 6;
         ctx.shadowColor = "#dfba6b";
         
         if (this.type === "heart") {
@@ -171,7 +202,6 @@ class Particle {
             ctx.rotate((this.rotation * Math.PI) / 180);
             drawHeart(ctx, -this.size / 2, -this.size / 2, this.size);
         } else {
-            // Draw Star (4-point flare)
             ctx.beginPath();
             const cx = this.x;
             const cy = this.y;
@@ -204,29 +234,22 @@ class Particle {
     }
 }
 
-// Helper to draw a heart shape
 function drawHeart(ctx, x, y, size) {
     ctx.beginPath();
     ctx.moveTo(x, y + size / 4);
-    // Left curve
     ctx.quadraticCurveTo(x, y, x + size / 2, y);
-    // Right curve
     ctx.quadraticCurveTo(x + size, y, x + size, y + size / 3);
-    // Bottom point
     ctx.quadraticCurveTo(x + size, y + (size * 2) / 3, x + size / 2, y + size);
-    // Bottom left point
     ctx.quadraticCurveTo(x, y + (size * 2) / 3, x, y + size / 3);
     ctx.quadraticCurveTo(x, y, x, y + size / 4);
     ctx.closePath();
     ctx.fill();
 }
 
-// Initialize particles scattered throughout the screen initially
 function initParticles() {
     particles = [];
     for (let i = 0; i < maxParticles; i++) {
         const p = new Particle();
-        // Scatter initial particles across the full height
         p.y = Math.random() * canvas.height;
         particles.push(p);
     }

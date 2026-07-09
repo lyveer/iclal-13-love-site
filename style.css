@@ -1,34 +1,186 @@
-/* Global Styles & Variables */
+/* ============================================
+   13-love | Lyveris & Lyver — Main Stylesheet
+   ============================================ */
+
+/* Custom L-Shaped Cursor */
+@font-face { font-family: 'Cinzel'; }
+
+/* L cursor as inline SVG data URI */
 :root {
+    --cursor-default: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='0 0 24 28'%3E%3Cpath d='M4 2 L4 22 L16 22' stroke='%23dfba6b' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4 2 L4 22 L16 22' stroke='%230d0906' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4 2 L4 22 L16 22' stroke='%23dfba6b' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, auto;
+    --cursor-pointer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='0 0 24 28'%3E%3Cpath d='M4 2 L4 22 L16 22' stroke='%23f5d796' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4 2 L4 22 L16 22' stroke='%230d0906' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4 2 L4 22 L16 22' stroke='%23f5d796' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, pointer;
+
     --bg-dark: #0d0906;
+    --bg-deep: #110e0a;
     --gold: #dfba6b;
     --gold-bright: #f5d796;
     --gold-dark: #a8843b;
+    --gold-dim: #8a6d30;
     --ivory: #fcf8f2;
     --ivory-muted: #d0c8b8;
-    --glass-bg: rgba(20, 15, 10, 0.55);
-    --glass-border: rgba(223, 186, 107, 0.18);
+    --rose-gold: #c4916e;
+    --glass-bg: rgba(17, 14, 10, 0.6);
+    --glass-border: rgba(223, 186, 107, 0.15);
+    --glass-border-hover: rgba(223, 186, 107, 0.35);
     --font-heading: 'Cinzel', serif;
     --font-deco: 'Cinzel Decorative', serif;
     --font-body: 'Outfit', sans-serif;
     --font-serif: 'Playfair Display', serif;
+    --shadow-deep: 0 12px 40px rgba(0, 0, 0, 0.65);
+    --shadow-glow: 0 0 25px rgba(223, 186, 107, 0.15);
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-left: 1px solid rgba(223, 186, 107, 0.08);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--gold-dark), var(--gold-dim));
+    border-radius: 10px;
+    border: 1px solid rgba(223, 186, 107, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--gold), var(--gold-dark));
+    box-shadow: 0 0 6px rgba(223, 186, 107, 0.4);
+}
+
+/* Firefox scrollbar */
 * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-dark) var(--bg-dark);
+}
+
+/* Reset */
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background: linear-gradient(rgba(13, 9, 6, 0.72), rgba(13, 9, 6, 0.88)), 
-                url('assets/background.jpg') no-repeat center center fixed;
+    background: var(--bg-dark);
+    background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(223, 186, 107, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(196, 145, 110, 0.03) 0%, transparent 50%),
+        linear-gradient(rgba(13, 9, 6, 0.7), rgba(13, 9, 6, 0.85)),
+        url('assets/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
     background-size: cover;
+    background-attachment: fixed;
     color: var(--ivory);
     font-family: var(--font-body);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    cursor: var(--cursor-default);
+}
+
+a, button, .nav-link, .letter-btn, .entrance-btn, .close-letter-btn {
+    cursor: var(--cursor-pointer);
+}
+
+/* ============================================
+   Entrance Overlay
+   ============================================ */
+.entrance-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(ellipse at center, rgba(17, 14, 10, 0.95), rgba(8, 5, 3, 0.99));
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.entrance-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.entrance-content {
+    text-align: center;
+    animation: fadeInUp 1.2s ease;
+}
+
+.entrance-logo {
+    font-family: var(--font-deco);
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(223, 186, 107, 0.5), 0 0 60px rgba(223, 186, 107, 0.2);
+    margin-bottom: 15px;
+    animation: pulseLogo 3s ease-in-out infinite alternate;
+}
+
+.entrance-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    letter-spacing: 6px;
+    color: var(--ivory);
+    margin-bottom: 10px;
+}
+
+.entrance-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--ivory-muted);
+    font-size: 1rem;
+    margin-bottom: 35px;
+}
+
+.entrance-btn {
+    background: transparent;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    padding: 14px 40px;
+    border-radius: 50px;
+    transition: all 0.4s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    animation: pulseBtn 2.5s ease-in-out infinite;
+}
+
+.entrance-btn:hover {
+    background: var(--gold);
+    color: var(--bg-dark);
+    box-shadow: 0 0 30px rgba(223, 186, 107, 0.4);
+    transform: scale(1.05);
+}
+
+/* Hidden music container */
+.bg-music-container {
+    position: fixed;
+    bottom: -200px;
+    left: -200px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
 }
 
 /* Background Canvas for Particles */
@@ -42,200 +194,246 @@ body {
     pointer-events: none;
 }
 
-/* Main Layout */
+/* ============================================
+   Main Layout
+   ============================================ */
 .main-container {
     position: relative;
     z-index: 2;
-    max-width: 900px;
+    max-width: 880px;
     margin: 0 auto;
     padding: 20px 20px 40px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 35px;
 }
 
-/* Floating Navigation Bar */
+/* ============================================
+   Floating Navigation Bar
+   ============================================ */
 .nav-bar {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    padding: 12px 25px;
-    margin-bottom: 10px;
+    gap: 10px;
+    padding: 10px 20px;
     border-radius: 50px;
-    background: rgba(20, 15, 10, 0.6);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(223, 186, 107, 0.15);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    transition: border-color 0.3s ease;
+    background: rgba(17, 14, 10, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(223, 186, 107, 0.1);
+    box-shadow: var(--shadow-deep);
 }
 
 .nav-bar:hover {
-    border-color: rgba(223, 186, 107, 0.3);
+    border-color: rgba(223, 186, 107, 0.25);
+    transform: none;
+    box-shadow: var(--shadow-deep);
 }
 
 .nav-link {
     color: var(--ivory-muted);
     text-decoration: none;
     font-family: var(--font-heading);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 1px;
     display: flex;
     align-items: center;
     gap: 8px;
     transition: all 0.3s ease;
-    padding: 6px 16px;
-    border-radius: 20px;
+    padding: 8px 18px;
+    border-radius: 25px;
 }
 
 .nav-link:hover, .nav-link.active {
     color: var(--gold);
     background: rgba(223, 186, 107, 0.08);
-    text-shadow: 0 0 10px rgba(223, 186, 107, 0.4);
+    text-shadow: 0 0 10px rgba(223, 186, 107, 0.3);
 }
 
-/* Glass Panels */
+/* ============================================
+   Glass Panels
+   ============================================ */
 .glass-panel {
     background: var(--glass-bg);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: var(--shadow-deep);
     transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .glass-panel:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 45px rgba(223, 186, 107, 0.1);
-    border-color: rgba(223, 186, 107, 0.35);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-deep), var(--shadow-glow);
+    border-color: var(--glass-border-hover);
 }
 
-/* Header / Hero Section */
+/* ============================================
+   Header / Hero Section
+   ============================================ */
 .hero-section {
     text-align: center;
-    padding: 10px 0;
+    padding: 10px 0 5px;
 }
 
 .logo-container {
-    width: 110px;
-    height: 110px;
+    width: 105px;
+    height: 105px;
     margin: 0 auto 15px;
     border: 2px solid var(--gold);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    box-shadow: 0 0 25px rgba(223, 186, 107, 0.25);
-    background: rgba(13, 9, 6, 0.5);
-    animation: rotateGold 20s linear infinite;
+    background: rgba(13, 9, 6, 0.6);
+    animation: glowPulse 4s ease-in-out infinite;
 }
 
 .logo-num {
     font-family: var(--font-deco);
-    font-size: 3.2rem;
+    font-size: 3rem;
     font-weight: 700;
     color: var(--gold);
-    text-shadow: 0 0 15px rgba(223, 186, 107, 0.6);
+    text-shadow: 0 0 15px rgba(223, 186, 107, 0.5);
     animation: pulseLogo 3s ease-in-out infinite alternate;
 }
 
 .couple-title {
     font-family: var(--font-heading);
-    font-size: 2.8rem;
-    letter-spacing: 4px;
-    margin-bottom: 12px;
+    font-size: 2.6rem;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
     color: var(--ivory);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
 }
 
 .subtitle {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--ivory-muted);
 }
 
-/* Sections Common Title */
+.hero-divider {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.hero-divider::before, .hero-divider::after {
+    content: '';
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+}
+
+.divider-ornament {
+    color: var(--gold);
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+/* ============================================
+   Section Common Title
+   ============================================ */
 .section-title {
     font-family: var(--font-heading);
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     letter-spacing: 2px;
     color: var(--gold);
-    margin-bottom: 25px;
+    margin-bottom: 22px;
     display: flex;
     align-items: center;
     gap: 12px;
-    border-bottom: 1px solid rgba(223, 186, 107, 0.15);
+    border-bottom: 1px solid rgba(223, 186, 107, 0.1);
     padding-bottom: 12px;
 }
 
 .section-title i {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
-/* Heartbeat Icon Animation */
 .pulse {
     animation: heartbeat 1.4s infinite;
 }
 
-/* Timer Section */
+/* ============================================
+   Timer Section
+   ============================================ */
 .timer-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 18px;
 }
 
 .timer-box {
-    background: rgba(13, 9, 6, 0.4);
-    border: 1px solid rgba(223, 186, 107, 0.08);
-    border-radius: 12px;
-    padding: 18px 10px;
+    background: rgba(8, 5, 3, 0.5);
+    border: 1px solid rgba(223, 186, 107, 0.06);
+    border-radius: 14px;
+    padding: 20px 10px;
     text-align: center;
-    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+    box-shadow: inset 0 2px 12px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.timer-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
 }
 
 .timer-val {
     display: block;
     font-family: var(--font-heading);
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     font-weight: 700;
     color: var(--gold-bright);
-    text-shadow: 0 0 10px rgba(245, 215, 150, 0.35);
+    text-shadow: 0 0 10px rgba(245, 215, 150, 0.25);
 }
 
 .timer-unit {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--ivory-muted);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
 }
 
 .anniversary-date {
     text-align: center;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--gold);
     font-family: var(--font-serif);
     font-style: italic;
-    margin-top: 15px;
+    margin-top: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
 }
 
-/* Content Row (Letter & Spotify) */
+/* ============================================
+   Content Row (Letter & Spotify)
+   ============================================ */
 .content-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 25px;
 }
 
-/* Letter Section */
 .letter-section {
     display: flex;
     flex-direction: column;
@@ -257,17 +455,16 @@ body {
 }
 
 .letter-btn {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    border: none;
-    color: var(--bg-dark);
+    background: transparent;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.95rem;
     letter-spacing: 1px;
     padding: 12px 28px;
     border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(168, 132, 59, 0.4);
+    box-shadow: 0 4px 15px rgba(168, 132, 59, 0.15);
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
@@ -275,21 +472,22 @@ body {
 }
 
 .letter-btn:hover {
+    background: var(--gold);
+    color: var(--bg-dark);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(168, 132, 59, 0.6);
-    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    box-shadow: 0 6px 25px rgba(168, 132, 59, 0.4);
 }
 
 .letter-btn:active {
     transform: translateY(1px);
 }
 
-/* Spotify Section */
+/* Spotify */
 .spotify-wrapper {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    padding: 5px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 14px;
+    padding: 6px;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .spotify-icon {
@@ -304,7 +502,9 @@ body {
     font-style: italic;
 }
 
-/* Gallery Section (Single Preview Card) */
+/* ============================================
+   Gallery Section (Single Preview)
+   ============================================ */
 .gallery-container {
     display: flex;
     justify-content: center;
@@ -313,10 +513,10 @@ body {
 
 .gallery-item {
     position: relative;
-    border-radius: 15px;
+    border-radius: 14px;
     overflow: hidden;
-    border: 1px solid var(--gold-dark);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+    border: 1px solid rgba(223, 186, 107, 0.15);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
     max-width: 500px;
     width: 100%;
 }
@@ -329,55 +529,42 @@ body {
 }
 
 .gallery-item:hover .gallery-img {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
-.gallery-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(13, 9, 6, 0.95));
-    padding: 20px 15px;
-    text-align: center;
-    font-family: var(--font-serif);
-    font-style: italic;
-    color: var(--gold-bright);
-    font-size: 1rem;
-    opacity: 0.9;
-}
-
-/* Gallery Grid (Multi-Photo Page) */
+/* ============================================
+   Gallery Grid (Multi-Photo Page)
+   ============================================ */
 .gallery-info-text {
     font-size: 0.9rem;
     color: var(--ivory-muted);
     font-style: italic;
     margin-bottom: 25px;
     line-height: 1.6;
-    border-left: 3px solid var(--gold-dark);
-    padding-left: 12px;
+    border-left: 2px solid var(--gold-dark);
+    padding-left: 14px;
 }
 
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
+    gap: 20px;
     margin-top: 10px;
 }
 
 .gallery-card {
-    background: rgba(13, 9, 6, 0.45);
-    border: 1px solid rgba(223, 186, 107, 0.1);
-    border-radius: 15px;
+    background: rgba(13, 9, 6, 0.4);
+    border: 1px solid rgba(223, 186, 107, 0.08);
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.45);
     transition: all 0.4s ease;
 }
 
 .gallery-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(223, 186, 107, 0.3);
-    box-shadow: 0 12px 30px rgba(223, 186, 107, 0.08);
+    transform: translateY(-4px);
+    border-color: rgba(223, 186, 107, 0.25);
+    box-shadow: 0 12px 30px rgba(223, 186, 107, 0.06);
 }
 
 .card-img-wrapper {
@@ -388,57 +575,28 @@ body {
     background: rgba(0,0,0,0.3);
 }
 
-.placeholder-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px dashed rgba(223, 186, 107, 0.15);
-}
-
-.placeholder-icon {
-    font-size: 3.2rem;
-    color: rgba(223, 186, 107, 0.12);
-    position: absolute;
-    animation: heartbeat 2s infinite alternate;
-}
-
 .card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s ease;
+    transition: transform 0.7s ease;
 }
 
 .gallery-card:hover .card-img {
     transform: scale(1.05);
 }
 
-.card-caption {
-    padding: 15px 20px;
-}
-
-.card-caption h3 {
-    font-family: var(--font-heading);
-    font-size: 1.05rem;
-    color: var(--gold);
-    margin-bottom: 5px;
-}
-
-.card-caption p {
-    font-size: 0.85rem;
-    color: var(--ivory-muted);
-    line-height: 1.45;
-}
-
-/* Letter Overlay (Parchment Paper Modal) */
+/* ============================================
+   Letter Overlay (Parchment Modal)
+   ============================================ */
 .letter-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(13, 9, 6, 0.85);
+    background: rgba(8, 5, 3, 0.88);
     z-index: 100;
     display: flex;
     align-items: center;
@@ -455,14 +613,14 @@ body {
 
 .parchment-letter {
     background: #fcf1d8;
-    background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 0),
-                      radial-gradient(rgba(0,0,0,0.05) 1px, transparent 0);
+    background-image: radial-gradient(rgba(0,0,0,0.04) 1px, transparent 0),
+                      radial-gradient(rgba(0,0,0,0.04) 1px, transparent 0);
     background-size: 8px 8px;
     background-position: 0 0, 4px 4px;
-    border-radius: 4px;
-    box-shadow: 0 10px 50px rgba(0,0,0,0.9), 
-                inset 0 0 60px rgba(139, 101, 57, 0.25);
-    max-width: 600px;
+    border-radius: 6px;
+    box-shadow: 0 12px 50px rgba(0,0,0,0.9),
+                inset 0 0 50px rgba(139, 101, 57, 0.2);
+    max-width: 550px;
     width: 100%;
     max-height: 80vh;
     overflow-y: auto;
@@ -471,6 +629,21 @@ body {
     border: 1px solid #d4c39e;
     transform: scale(1);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: var(--cursor-default);
+}
+
+/* Parchment scrollbar */
+.parchment-letter::-webkit-scrollbar {
+    width: 6px;
+}
+
+.parchment-letter::-webkit-scrollbar-track {
+    background: #f0e6cc;
+}
+
+.parchment-letter::-webkit-scrollbar-thumb {
+    background: #c4a874;
+    border-radius: 6px;
 }
 
 .letter-overlay.hidden .parchment-letter {
@@ -479,13 +652,12 @@ body {
 
 .close-letter-btn {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 2.2rem;
+    top: 12px;
+    right: 18px;
+    font-size: 2rem;
     background: none;
     border: none;
     color: #8b6539;
-    cursor: pointer;
     transition: color 0.3s ease;
 }
 
@@ -497,39 +669,41 @@ body {
     color: #4a3319;
     font-family: var(--font-serif);
     font-size: 1.15rem;
-    line-height: 1.8;
+    line-height: 1.9;
 }
 
 .letter-header {
     font-family: var(--font-heading);
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     margin-bottom: 25px;
     color: #38240f;
-    border-bottom: 1px dashed rgba(139, 101, 57, 0.3);
+    border-bottom: 1px dashed rgba(139, 101, 57, 0.25);
     padding-bottom: 10px;
 }
 
 .letter-content {
-    min-height: 200px;
+    min-height: 180px;
     white-space: pre-wrap;
 }
 
 .letter-signature {
-    margin-top: 40px;
+    margin-top: 35px;
     text-align: right;
-    border-top: 1px dashed rgba(139, 101, 57, 0.3);
+    border-top: 1px dashed rgba(139, 101, 57, 0.25);
     padding-top: 15px;
 }
 
 .signature-name {
     font-family: var(--font-heading);
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 700;
     margin-top: 5px;
     color: #38240f;
 }
 
-/* Footer Section */
+/* ============================================
+   Footer
+   ============================================ */
 .footer-section {
     text-align: center;
     padding: 20px 0;
@@ -539,7 +713,9 @@ body {
     letter-spacing: 1px;
 }
 
-/* Animations */
+/* ============================================
+   Animations
+   ============================================ */
 @keyframes heartbeat {
     0% { transform: scale(1); }
     30% { transform: scale(1.15); }
@@ -548,40 +724,54 @@ body {
     100% { transform: scale(1); }
 }
 
-@keyframes rotateGold {
-    0% { box-shadow: 0 0 20px rgba(223, 186, 107, 0.2); }
-    50% { box-shadow: 0 0 35px rgba(223, 186, 107, 0.45); }
-    100% { box-shadow: 0 0 20px rgba(223, 186, 107, 0.2); }
+@keyframes glowPulse {
+    0% { box-shadow: 0 0 15px rgba(223, 186, 107, 0.15); }
+    50% { box-shadow: 0 0 30px rgba(223, 186, 107, 0.35); }
+    100% { box-shadow: 0 0 15px rgba(223, 186, 107, 0.15); }
 }
 
 @keyframes pulseLogo {
     0% { transform: scale(1); opacity: 0.95; }
-    100% { transform: scale(1.03); opacity: 1; text-shadow: 0 0 25px rgba(223, 186, 107, 0.8); }
+    100% { transform: scale(1.03); opacity: 1; text-shadow: 0 0 25px rgba(223, 186, 107, 0.7); }
 }
 
-/* Media Queries for Responsiveness */
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseBtn {
+    0% { box-shadow: 0 0 0 0 rgba(223, 186, 107, 0.3); }
+    50% { box-shadow: 0 0 0 12px rgba(223, 186, 107, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(223, 186, 107, 0); }
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
 @media (max-width: 768px) {
     .main-container {
-        padding: 10px 15px 30px;
+        padding: 10px 14px 30px;
         gap: 25px;
     }
 
     .couple-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
+        letter-spacing: 3px;
     }
 
     .logo-container {
-        width: 90px;
-        height: 90px;
+        width: 85px;
+        height: 85px;
     }
 
     .logo-num {
-        font-size: 2.6rem;
+        font-size: 2.4rem;
     }
 
     .timer-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        gap: 10px;
     }
 
     .content-row {
@@ -591,7 +781,7 @@ body {
 
     .gallery-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 18px;
     }
 
     .parchment-letter {
@@ -601,5 +791,14 @@ body {
 
     .letter-body {
         font-size: 1.05rem;
+    }
+
+    .entrance-logo {
+        font-size: 4rem;
+    }
+
+    .entrance-title {
+        font-size: 1.4rem;
+        letter-spacing: 4px;
     }
 }

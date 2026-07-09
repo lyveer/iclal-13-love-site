@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>13 | İclal & Lyver</title>
+    <title>13 | Lyveris & Lyver</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,8 +14,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Entrance Overlay (click to enter & start music) -->
+    <div id="entranceOverlay" class="entrance-overlay">
+        <div class="entrance-content">
+            <div class="entrance-logo">13</div>
+            <h2 class="entrance-title">Lyveris & Lyver</h2>
+            <p class="entrance-sub">Bir aşk hikayesine hoş geldin.</p>
+            <button id="enterSiteBtn" class="entrance-btn">
+                <i class="fa-solid fa-door-open"></i> Giriş Yap
+            </button>
+        </div>
+    </div>
+
     <!-- Background Particle Canvas -->
     <canvas id="particleCanvas"></canvas>
+
+    <!-- Hidden Background Music Player (loads after entrance click) -->
+    <div id="bgMusicContainer" class="bg-music-container">
+        <!-- Spotify iframe will be injected here after user clicks entrance -->
+    </div>
 
     <!-- Main Container -->
     <main class="main-container">
@@ -31,8 +49,11 @@
             <div class="logo-container">
                 <span class="logo-num">13</span>
             </div>
-            <h1 class="couple-title">İclal & Lyver</h1>
+            <h1 class="couple-title">Lyveris & Lyver</h1>
             <p class="subtitle">Zamanın ve kaderin birleştiği o sonsuz an.</p>
+            <div class="hero-divider">
+                <span class="divider-ornament">❦</span>
+            </div>
         </header>
 
         <!-- Timer Section -->
@@ -57,7 +78,7 @@
                 </div>
             </div>
             <div class="anniversary-date">
-                <i class="fa-regular fa-calendar-star"></i> Başlangıç: 13 Mart 2025
+                <i class="fa-solid fa-infinity"></i> Başlangıç: 13 Mart 2025
             </div>
         </section>
 
@@ -78,7 +99,6 @@
             <!-- Spotify Player Section -->
             <section class="spotify-section glass-panel">
                 <h2 class="section-title"><i class="fa-brands fa-spotify spotify-icon"></i> Çalma Listemiz</h2>
-                <!-- Customizable Spotify Player Embed -->
                 <div class="spotify-wrapper">
                     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0psf8U4tkvqEas1PivtQSV?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
@@ -92,14 +112,14 @@
             <h2 class="section-title"><i class="fa-regular fa-image"></i> Aşkımızın Portresi</h2>
             <div class="gallery-container">
                 <div class="gallery-item">
-                    <img src="assets/background.jpg" alt="İclal & Lyver Portre" class="gallery-img">
+                    <img src="assets/background.jpg" alt="Lyveris & Lyver Portre" class="gallery-img">
                 </div>
             </div>
         </section>
 
         <!-- Footer -->
         <footer class="footer-section">
-            <p>13.03.2025 • Aşkla, İclal İçin.</p>
+            <p>13.03.2025 • Aşkla, Lyveris İçin.</p>
         </footer>
     </main>
 
@@ -108,9 +128,8 @@
         <div class="parchment-letter">
             <button id="closeLetterBtn" class="close-letter-btn">&times;</button>
             <div class="letter-body">
-                <h3 class="letter-header">Sevgilim İclal'e,</h3>
+                <h3 class="letter-header">Sevgilim Lyveris'e,</h3>
                 <div id="typewriterText" class="letter-content">
-                    <!-- Text will be typed here dynamically with Javascript -->
                 </div>
                 <div class="letter-signature">
                     <p>Her şeyimle,</p>
