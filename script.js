@@ -6,28 +6,60 @@
 const anniversaryDate = new Date("2025-03-13T00:00:00");
 
 // ============================================
-// Entrance Overlay & Background Music
+// Entrance Overlay & Background Music (Spotify IFrame API)
 // ============================================
 const entranceOverlay = document.getElementById("entranceOverlay");
 const enterSiteBtn = document.getElementById("enterSiteBtn");
 const bgMusicContainer = document.getElementById("bgMusicContainer");
 
+let embedController = null;
+let hasInteracted = false;
+
+// Dynamically load the Spotify Iframe API script
+if (bgMusicContainer) {
+    const script = document.createElement('script');
+    script.src = "https://open.spotify.com/iframe-api/v1";
+    script.async = true;
+    document.body.appendChild(script);
+}
+
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+    const element = document.getElementById("bgMusicContainer");
+    if (!element) return;
+    
+    const options = {
+        uri: 'spotify:track:5GpfyJrKHJI36jDKtQiyGN',
+        width: '100%',
+        height: '80',
+        theme: '0'
+    };
+    
+    IFrameAPI.createController(element, options, (controller) => {
+        embedController = controller;
+        // If the user already clicked the enter button before API was ready, start playback
+        if (hasInteracted) {
+            bgMusicContainer.classList.add("visible");
+            setTimeout(() => {
+                embedController.play();
+            }, 300);
+        }
+    });
+};
+
 if (enterSiteBtn) {
     enterSiteBtn.addEventListener("click", () => {
+        hasInteracted = true;
         // Fade out entrance
         entranceOverlay.classList.add("fade-out");
 
-        // Inject the Spotify embed iframe with autoplay after user interaction
-        // This satisfies browser autoplay policies
+        // Slide in music player and trigger playback if controller is ready
         if (bgMusicContainer) {
-            bgMusicContainer.innerHTML = `
-                <iframe 
-                    src="https://open.spotify.com/embed/track/5GpfyJrKHJI36jDKtQiyGN?utm_source=generator&theme=0&autoplay=1" 
-                    width="300" height="80" frameBorder="0" 
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                    loading="eager">
-                </iframe>
-            `;
+            bgMusicContainer.classList.add("visible");
+            if (embedController) {
+                setTimeout(() => {
+                    embedController.play();
+                }, 300);
+            }
         }
 
         // Remove entrance overlay from DOM after animation finishes

@@ -170,17 +170,38 @@ a, button, .nav-link, .letter-btn, .entrance-btn, .close-letter-btn {
     transform: scale(1.05);
 }
 
-/* Hidden music container */
+/* Floating music container */
 .bg-music-container {
     position: fixed;
-    bottom: -200px;
-    left: -200px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    height: 80px;
+    z-index: 99;
+    border-radius: 12px;
+    box-shadow: var(--shadow-deep), var(--shadow-glow);
+    border: 1px solid var(--glass-border);
+    background: rgba(13, 9, 6, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease;
     opacity: 0;
-    pointer-events: none;
-    z-index: -1;
+    transform: translateY(100px);
+    pointer-events: all;
+    overflow: hidden;
+}
+
+.bg-music-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    .bg-music-container {
+        width: calc(100% - 40px);
+        left: 20px;
+        right: 20px;
+    }
 }
 
 /* Background Canvas for Particles */
