@@ -1,0 +1,17 @@
+{
+  "name": "iclal-13-love-site",
+  "version": "1.0.0",
+  "description": "13 - İclal & Lyver Aşk Sitesi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Lyver",
+  "license": "ISC"
+}

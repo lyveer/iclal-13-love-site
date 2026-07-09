@@ -1,0 +1,477 @@
+/* Global Styles & Variables */
+:root {
+    --bg-dark: #0d0906;
+    --gold: #dfba6b;
+    --gold-bright: #f5d796;
+    --gold-dark: #a8843b;
+    --ivory: #fcf8f2;
+    --ivory-muted: #d0c8b8;
+    --glass-bg: rgba(20, 15, 10, 0.55);
+    --glass-border: rgba(223, 186, 107, 0.18);
+    --font-heading: 'Cinzel', serif;
+    --font-deco: 'Cinzel Decorative', serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-type: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(rgba(13, 9, 6, 0.72), rgba(13, 9, 6, 0.88)), 
+                url('assets/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: var(--ivory);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Canvas for Particles */
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Main Layout */
+.main-container {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* Glass Panels */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.glass-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 45px rgba(223, 186, 107, 0.1);
+    border-color: rgba(223, 186, 107, 0.35);
+}
+
+/* Header / Hero Section */
+.hero-section {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.logo-container {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 20px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 25px rgba(223, 186, 107, 0.25);
+    background: rgba(13, 9, 6, 0.5);
+    animation: rotateGold 20s linear infinite;
+}
+
+.logo-num {
+    font-family: var(--font-deco);
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-shadow: 0 0 15px rgba(223, 186, 107, 0.6);
+    animation: pulseLogo 3s ease-in-out infinite alternate;
+}
+
+.couple-title {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    color: var(--ivory);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.subtitle {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ivory-muted);
+}
+
+/* Sections Common Title */
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(223, 186, 107, 0.15);
+    padding-bottom: 12px;
+}
+
+.section-title i {
+    font-size: 1.2rem;
+}
+
+/* Heartbeat Icon Animation */
+.pulse {
+    animation: heartbeat 1.4s infinite;
+}
+
+/* Timer Section */
+.timer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.timer-box {
+    background: rgba(13, 9, 6, 0.4);
+    border: 1px solid rgba(223, 186, 107, 0.08);
+    border-radius: 12px;
+    padding: 18px 10px;
+    text-align: center;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.timer-val {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--gold-bright);
+    text-shadow: 0 0 10px rgba(245, 215, 150, 0.35);
+}
+
+.timer-unit {
+    font-size: 0.85rem;
+    color: var(--ivory-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.anniversary-date {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--gold);
+    font-family: var(--font-serif);
+    font-style: italic;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Content Row (Letter & Spotify) */
+.content-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+/* Letter Section */
+.letter-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.letter-preview {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--ivory-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.letter-action {
+    display: flex;
+    justify-content: center;
+}
+
+.letter-btn {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border: none;
+    color: var(--bg-dark);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(168, 132, 59, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.letter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 132, 59, 0.6);
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+}
+
+.letter-btn:active {
+    transform: translateY(1px);
+}
+
+/* Spotify Section */
+.spotify-wrapper {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.spotify-icon {
+    color: #1DB954;
+}
+
+.spotify-note {
+    font-size: 0.8rem;
+    color: var(--ivory-muted);
+    margin-top: 12px;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Gallery Section */
+.gallery-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid var(--gold-dark);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+    max-width: 500px;
+    width: 100%;
+}
+
+.gallery-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.8s ease;
+}
+
+.gallery-item:hover .gallery-img {
+    transform: scale(1.05);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(13, 9, 6, 0.95));
+    padding: 20px 15px;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--gold-bright);
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Letter Overlay (Parchment Paper Modal) */
+.letter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(13, 9, 6, 0.85);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.letter-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.parchment-letter {
+    background: #fcf1d8;
+    background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 0),
+                      radial-gradient(rgba(0,0,0,0.05) 1px, transparent 0);
+    background-size: 8px 8px;
+    background-position: 0 0, 4px 4px;
+    border-radius: 4px;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.9), 
+                inset 0 0 60px rgba(139, 101, 57, 0.25);
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+    border: 1px solid #d4c39e;
+    transform: scale(1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.letter-overlay.hidden .parchment-letter {
+    transform: scale(0.9);
+}
+
+.close-letter-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2.2rem;
+    background: none;
+    border: none;
+    color: #8b6539;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-letter-btn:hover {
+    color: #bf0000;
+}
+
+.letter-body {
+    color: #4a3319;
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+.letter-header {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    color: #38240f;
+    border-bottom: 1px dashed rgba(139, 101, 57, 0.3);
+    padding-bottom: 10px;
+}
+
+.letter-content {
+    min-height: 200px;
+    white-space: pre-wrap;
+}
+
+.letter-signature {
+    margin-top: 40px;
+    text-align: right;
+    border-top: 1px dashed rgba(139, 101, 57, 0.3);
+    padding-top: 15px;
+}
+
+.signature-name {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 5px;
+    color: #38240f;
+}
+
+/* Footer Section */
+.footer-section {
+    text-align: center;
+    padding: 20px 0;
+    color: var(--ivory-muted);
+    font-size: 0.85rem;
+    font-family: var(--font-serif);
+    letter-spacing: 1px;
+}
+
+/* Animations */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes rotateGold {
+    /* Subtle glow animation or rotate if requested, we do simple glow animation to avoid spinning background */
+    0% { box-shadow: 0 0 20px rgba(223, 186, 107, 0.2); }
+    50% { box-shadow: 0 0 35px rgba(223, 186, 107, 0.45); }
+    100% { box-shadow: 0 0 20px rgba(223, 186, 107, 0.2); }
+}
+
+@keyframes pulseLogo {
+    0% { transform: scale(1); opacity: 0.95; }
+    100% { transform: scale(1.03); opacity: 1; text-shadow: 0 0 25px rgba(223, 186, 107, 0.8); }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 20px 15px;
+        gap: 30px;
+    }
+
+    .couple-title {
+        font-size: 2.2rem;
+    }
+
+    .logo-container {
+        width: 90px;
+        height: 90px;
+    }
+
+    .logo-num {
+        font-size: 2.6rem;
+    }
+
+    .timer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .content-row {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .parchment-letter {
+        padding: 25px;
+        max-height: 85vh;
+    }
+
+    .letter-body {
+        font-size: 1.05rem;
+    }
+}
