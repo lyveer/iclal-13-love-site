@@ -15,16 +15,9 @@ const bgMusicContainer = document.getElementById("bgMusicContainer");
 let embedController = null;
 let hasInteracted = false;
 
-// Dynamically load the Spotify Iframe API script
-if (bgMusicContainer) {
-    const script = document.createElement('script');
-    script.src = "https://open.spotify.com/iframe-api/v1";
-    script.async = true;
-    document.body.appendChild(script);
-}
-
+// Define callback first to prevent race condition when API script loads
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
-    const element = document.getElementById("bgMusicContainer");
+    const element = document.getElementById("spotify-player-placeholder");
     if (!element) return;
     
     const options = {
@@ -45,6 +38,14 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
         }
     });
 };
+
+// Dynamically load the Spotify Iframe API script after callback definition
+if (bgMusicContainer) {
+    const script = document.createElement('script');
+    script.src = "https://open.spotify.com/iframe-api/v1";
+    script.async = true;
+    document.body.appendChild(script);
+}
 
 if (enterSiteBtn) {
     enterSiteBtn.addEventListener("click", () => {
