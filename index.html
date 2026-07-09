@@ -41,9 +41,17 @@
                 <span class="player-title">Golden Brown</span>
                 <span class="player-artist">The Stranglers</span>
             </div>
-            <button id="playerPlayBtn" class="player-control-btn">
-                <i class="fa-solid fa-pause"></i>
-            </button>
+            <div class="player-controls">
+                <div class="volume-container">
+                    <button id="playerVolumeBtn" class="player-volume-btn">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.05" value="0.5">
+                </div>
+                <button id="playerPlayBtn" class="player-control-btn">
+                    <i class="fa-solid fa-pause"></i>
+                </button>
+            </div>
         </div>
     </div>
 

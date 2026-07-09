@@ -286,6 +286,78 @@ a, button, .nav-link, .letter-btn, .entrance-btn, .close-letter-btn {
     transform: scale(1.08);
 }
 
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.volume-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.player-volume-btn {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-size: 1.05rem;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease, transform 0.2s;
+}
+
+.player-volume-btn:hover {
+    color: var(--gold-bright);
+    transform: scale(1.1);
+}
+
+.volume-slider {
+    width: 60px;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(223, 186, 107, 0.25);
+    border-radius: 2px;
+    outline: none;
+    transition: background 0.3s;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: var(--cursor-pointer);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+    background: var(--gold-bright);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: var(--cursor-pointer);
+    border: none;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.volume-slider::-moz-range-thumb:hover {
+    transform: scale(1.3);
+    background: var(--gold-bright);
+}
+
+
 /* Background Canvas for Particles */
 #particleCanvas {
     position: fixed;

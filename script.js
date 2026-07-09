@@ -14,6 +14,10 @@ const bgMusicContainer = document.getElementById("bgMusicContainer");
 const bgAudio = document.getElementById("bgAudio");
 const playerPlayBtn = document.getElementById("playerPlayBtn");
 const playerDisk = document.querySelector(".player-disk");
+const playerVolumeBtn = document.getElementById("playerVolumeBtn");
+const volumeSlider = document.getElementById("volumeSlider");
+
+let previousVolume = 0.5;
 
 if (enterSiteBtn) {
     enterSiteBtn.addEventListener("click", () => {
@@ -24,8 +28,9 @@ if (enterSiteBtn) {
         if (bgMusicContainer) {
             bgMusicContainer.classList.add("visible");
             if (bgAudio) {
-                // Lower volume to prevent it from being too loud (as requested)
-                bgAudio.volume = 0.35;
+                // Set default volume to 50% (0.5) as requested
+                bgAudio.volume = 0.5;
+                if (volumeSlider) volumeSlider.value = 0.5;
                 bgAudio.play().then(() => {
                     if (playerDisk) playerDisk.classList.add("playing");
                 }).catch(err => {
@@ -41,6 +46,7 @@ if (enterSiteBtn) {
     });
 }
 
+// Play/Pause toggle
 if (playerPlayBtn && bgAudio) {
     playerPlayBtn.addEventListener("click", () => {
         if (bgAudio.paused) {
@@ -53,6 +59,51 @@ if (playerPlayBtn && bgAudio) {
             if (playerDisk) playerDisk.classList.remove("playing");
         }
     });
+}
+
+// Volume slider control
+if (volumeSlider && bgAudio) {
+    volumeSlider.addEventListener("input", (e) => {
+        const volumeVal = parseFloat(e.target.value);
+        bgAudio.volume = volumeVal;
+        
+        // Update volume button icon based on level
+        updateVolumeIcon(volumeVal);
+        
+        if (volumeVal > 0) {
+            previousVolume = volumeVal;
+        }
+    });
+}
+
+// Mute/Unmute toggle button
+if (playerVolumeBtn && bgAudio && volumeSlider) {
+    playerVolumeBtn.addEventListener("click", () => {
+        if (bgAudio.volume > 0) {
+            // Mute
+            previousVolume = bgAudio.volume;
+            bgAudio.volume = 0;
+            volumeSlider.value = 0;
+            updateVolumeIcon(0);
+        } else {
+            // Unmute to previous level
+            bgAudio.volume = previousVolume;
+            volumeSlider.value = previousVolume;
+            updateVolumeIcon(previousVolume);
+        }
+    });
+}
+
+// Helper to update volume icon
+function updateVolumeIcon(volumeVal) {
+    if (!playerVolumeBtn) return;
+    if (volumeVal === 0) {
+        playerVolumeBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+    } else if (volumeVal < 0.5) {
+        playerVolumeBtn.innerHTML = '<i class="fa-solid fa-volume-low"></i>';
+    } else {
+        playerVolumeBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+    }
 }
 
 // ============================================
